@@ -21,8 +21,8 @@ app.use(bodyParser.json())
 app.use('/api/user', userRoutes)
 
 app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
 })
 
 const port = process.env.PORT || 3001
