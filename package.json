@@ -1,0 +1,37 @@
+{
+  "name": "bowled-over",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:react": "cd react-app && npm run build",
+    "start:react": "cd react-app && npm start",
+    "prestart": "npm run build:react",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "start:dev:all": "npm-run-all -p start:react start:dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cferg019/bowled-over.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cferg019/bowled-over/issues"
+  },
+  "homepage": "https://github.com/cferg019/bowled-over#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5"
+  }
+}
