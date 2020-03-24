@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cferg019/BowledOver.git"
+    "url": "git+https://github.com/cferg019/bowled-over.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cferg019/BowledOver/issues"
+    "url": "https://github.com/cferg019/bowled-over/issues"
   },
-  "homepage": "https://github.com/cferg019/BowledOver#readme",
+  "homepage": "https://github.com/cferg019/bowled-over#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
