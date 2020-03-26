@@ -3,6 +3,7 @@ const { mongooseSchema: GameSchema, joiSchema: gameJoiSchema} = require('./game.
 const joi = require('joi')
 
 const joiSchema = joi.object().keys({
+    _id: joi.string().length(24),
     userId: joi.string().length(24).required(),
     alleyId: joi.string().length(24),
     games: joi.array().items(gameJoiSchema)
