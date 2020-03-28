@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import './Login.css';
+import './Signup.css';
 
 
-class Login extends Component {
+class Signup extends Component {
     state = {
         email: '',
         password: '',
         isSubmitted: false,
-        errorMessage: ''
+        errorMessage: '',
+        firstName: '',
+        lastName: '',
+        confirmPassword: ''
+
     }
 
     handleInputChange = event => {
@@ -21,9 +25,11 @@ class Login extends Component {
         event.preventDefault()
         const body = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
         }
-        fetch(`/auth/login`, {
+        fetch(`/auth/signup`, {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -37,7 +43,7 @@ class Login extends Component {
             })
             .then(user => console.log('GOT this user', user))
             .catch(err => {
-                if(err.status === 401) {
+                if (err.status === 401) {
                     this.setState({
                         errorMessage: 'Login failed. Please try again.'
                     })
@@ -51,20 +57,26 @@ class Login extends Component {
             < div className="container">
                 <div className="row">
                     <div className="col-md-6 login-form-1 offset-md-3">
-                        <h2>Log In</h2>
+                        <h2>Sign Up</h2>
                         <form>
+                            <div className="form-group">
+                                <input onChange={this.handleInputChange} name="firstName" type="text" className="form-control" placeholder="First Name *" value={this.state.firstName} />
+                            </div>
+                            <div className="form-group">
+                                <input onChange={this.handleInputChange} name="lastName" type="text" className="form-control" placeholder="Last Name *" value={this.state.lastName} />
+                            </div>
                             <div className="form-group">
                                 <input onChange={this.handleInputChange} name="email" type="text" className="form-control" placeholder="Your Email *" value={this.state.email} />
                             </div>
                             <div className="form-group">
                                 <input onChange={this.handleInputChange} type="password" className="form-control" name="password" placeholder="Your Password *" value={this.state.password} />
                             </div>
+                            <div className="form-group">
+                                <input onChange={this.handleInputChange} type="password" className="form-control" name="confirmPassword" placeholder="Retype Password *" value={this.state.confirmPassword} />
+                            </div>
                             <p>{this.state.errorMessage}</p>
                             <div className="form-group">
-                                <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Login" />
-                            </div>
-                            <div className="form-group">
-                                <a href="#" className="ForgetPwd">Forget Password?</a>
+                                <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Sign Up" />
                             </div>
                         </form>
                     </div>
@@ -74,4 +86,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default Signup

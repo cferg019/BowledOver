@@ -6,6 +6,7 @@ import Login from './components/Login'
 import Session from './components/Session'
 import Game from './components/Game'
 import Frame from './components/Frame'
+import logo from './logo.svg'
 
 
 
@@ -21,7 +22,7 @@ class App extends Component {
   }
   render() {
     return (
-      <Jumbotron />
+      // <Jumbotron />
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
