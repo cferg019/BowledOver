@@ -21,6 +21,9 @@ const ballRoutes = require('./src/routes/ball.routes')
 const alleyRoutes = require('./src/routes/alley.routes')
 const opponentRoutes = require('./src/routes/opponent.routes')
 const gameRoutes = require('./src/routes/game.routes')
+const authRoutes = require('./src/routes/auth.routes')
+
+require('./src/config/passport')
 
 app.use(morgan('dev'))
 app.use(session({
@@ -40,6 +43,8 @@ app.use('/api/user', opponentRoutes)
 app.use('/api/session', sessionRoutes)
 app.use('/api/session', gameRoutes)
 app.use('/api/session', frameRoutes)
+
+app.use('/auth', authRoutes)
 
 app.use((err, req, res, next) => {
     console.error(err.stack)

@@ -14,13 +14,24 @@ passport.use(new LocalStrategy({
                 if (!user) {
                     return cb(null, false, { message: 'Incorrect email.' })
                 }
+                console.log('got the user', user)
+                console.log('comparing password', password)
 
-                user.comparePassword(password, (err, isMatch) => {
-                    if (err) return cb(err)
-                    if (!isMatch) return cb(null, false)
-                    return cb(null, user, { message: 'Logged In Successfully' })
-                })
+                const isMatch = User.comparePassword(password, user.password)
+                if (!isMatch) return cb(null, false)
+                return cb(null, user, { message: 'Logged In Successfully' })
+
             })
             .catch(err => cb(err))
     }
 ))
+
+passport.serializeUser(function (user, done) {
+    done(null, user.id)
+})
+
+passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+        done(err, user)
+    })
+})

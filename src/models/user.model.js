@@ -20,26 +20,31 @@ const userSchema = new Schema({
     email: { type: String, require: true, unique: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    password: { type: String, required: true, select: false },
+    password: { type: String, required: true },
     balls: [BallSchema],
     alleys: [AlleySchema],
     commonOpponents: [OpponentSchema]
 })
 
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', function(next) {
     if (!this.isModified('password')) return next()
     try {
-      const salt = await bcrypt.genSalt(10)
-      this.password = await bcrypt.hash(this.password, salt)
+      const salt = bcrypt.genSaltSync(10)
+      this.password = bcrypt.hashSync(this.password, salt)
       return next()
     } catch (err) {
       return next(err)
     }
 })
 
-userSchema.methods.comparePassword = function(candidatePassword) {
-    return bcrypt.compare(candidatePassword, this.password)
+userSchema.statics.comparePassword = function(candidatePassword, existingPassword) {
+    return bcrypt.compareSync(candidatePassword, existingPassword)
 }
+
+// userSchema.methods.comparePassword = function(candidatePassword) {
+//     console.log('comparing hashes', this.password, candidatePassword)
+//     return bcrypt.compareSync(candidatePassword, this.password)
+// }
 
 module.exports = {
     model: model('User', userSchema),
