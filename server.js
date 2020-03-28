@@ -4,6 +4,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const passport = require('passport')
 
 dotenv.config()
 
@@ -21,6 +23,13 @@ const opponentRoutes = require('./src/routes/opponent.routes')
 const gameRoutes = require('./src/routes/game.routes')
 
 app.use(morgan('dev'))
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'react-app', 'build')))
 app.use(bodyParser.json())
 

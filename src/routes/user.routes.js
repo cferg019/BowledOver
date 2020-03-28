@@ -55,17 +55,4 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
-// Add a new ball to user
-
-// Modify ball for user
-// Delete ball for user
-
-// Add an alley for user
-// Modify alley for user
-// Delete alley for user
-
-// Add a common opponent for user
-// Modify common opponent for user
-// Delete common opponent for user
-
 module.exports = router
