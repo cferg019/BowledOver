@@ -5,6 +5,7 @@ const { mongooseSchema: OpponentSchema, joiSchema: opponentJoiSchema} = require(
 const joi = require('joi')
 
 const joiSchema = joi.object().keys({
+    _id: joi.string().length(24),
     email: joi.string().email().required(),
     firstName: joi.string().min(3).max(50).required(),
     lastName: joi.string().min(3).max(50).required(),

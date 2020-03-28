@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose')
 const joi = require('joi')
 
 const joiSchema = joi.object().keys({
+    _id: joi.string().length(24),
     name: joi.string().min(3).max(50).required(),
     weight: joi.number()
 })
