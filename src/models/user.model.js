@@ -11,6 +11,8 @@ const joiSchema = joi.object().keys({
     firstName: joi.string().min(3).max(50).required(),
     lastName: joi.string().min(3).max(50).required(),
     password: joi.string().min(8).max(255).required(),
+    isVerified: joi.bool(),
+    verificationToken: joi.string(),
     balls: joi.array().items(ballJoiSchema),
     alleys: joi.array().items(alleyJoiSchema),
     commonOpponents: joi.array().items(opponentJoiSchema)
@@ -21,6 +23,8 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     password: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String },
     balls: [BallSchema],
     alleys: [AlleySchema],
     commonOpponents: [OpponentSchema]

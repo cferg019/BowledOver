@@ -14,6 +14,10 @@ passport.use(new LocalStrategy({
                 if (!user) {
                     return cb(null, false, { message: 'Incorrect email.' })
                 }
+                if (!user.isVerified && process.env.NODE_ENV !== 'local') {
+                    console.log('not yet verified, rejecting')
+                    return cb(null, false, { message: 'User is not verified yet.'})
+                }
                 console.log('got the user', user)
                 console.log('comparing password', password)
 
