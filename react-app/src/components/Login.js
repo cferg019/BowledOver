@@ -37,13 +37,14 @@ class Login extends Component {
             })
             .then(user => console.log('GOT this user', user))
             .catch(err => {
-                if(err.status === 401) {
+                if (err.status === 401) {
                     this.setState({
                         errorMessage: 'Login failed. Please try again.'
                     })
                 }
                 console.log('sorry, got an error', err)
             })
+            alert('login successful')
     }
 
     render() {

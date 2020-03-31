@@ -21,6 +21,23 @@ class Signup extends Component {
         });
     };
 
+    validateForm = () => {
+        let hasErrors = false;
+        if (this.state.password !== this.state.confirmPassword) {
+            this.setState({
+                errorMessage: 'Passwords must match. Please try again.'
+            })
+            hasErrors = true;
+        }
+        if (this.state.password.length < 8) {
+            this.setState({
+                errorMessage: 'Password must be at least 8 characters in length.'
+            })
+            hasErrors = true;
+        }
+        return hasErrors;
+    }
+
     handleLoginButtonClick = event => {
         event.preventDefault()
         const body = {
@@ -28,6 +45,9 @@ class Signup extends Component {
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName
+        }
+        if (this.validateForm()) {
+            return
         }
         fetch(`/auth/signup`, {
             method: 'post',
@@ -48,8 +68,19 @@ class Signup extends Component {
                         errorMessage: 'Login failed. Please try again.'
                     })
                 }
+
                 console.log('sorry, got an error', err)
+                return;
             })
+        this.setState({
+            errorMessage: '',
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: '',
+            confirmPassword: ''
+        })
+        alert('signup successful.')
     }
 
     render() {

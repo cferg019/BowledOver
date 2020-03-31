@@ -34,13 +34,13 @@ router.get('/verify/email/:emailAddress/token/:token', async (req, res, next) =>
     }
     user.isVerified = true
     await user.save()
-    res.redirect('/login')
+    res.redirect(`${process.env.BASE_APP_URL}/login`)
 })
 
 // Route for logging user out
 router.post("/logout", function (req, res) {
     req.logout()
-    res.redirect("/login")
+    res.redirect(`${process.env.BASE_APP_URL}/login`)
 })
 
 module.exports = router
