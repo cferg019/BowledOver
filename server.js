@@ -47,8 +47,11 @@ app.use('/api/session', frameRoutes)
 app.use('/auth', authRoutes)
 
 app.use((err, req, res, next) => {
-    console.error(err.stack)
+    console.error(err.stack, err.name)
     if (err.name === 'MongoError') {
+        res.status(400).json(err)
+    }
+    if (err.name === 'ValidationError') {
         res.status(400).json(err)
     }
     res.status(500).send('Something broke!')
