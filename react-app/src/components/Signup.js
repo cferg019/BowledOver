@@ -35,7 +35,43 @@ class Signup extends Component {
             })
             hasErrors = true;
         }
+        if (this.state.firstName.length < 3) {
+            this.setState({
+                errorMessage: 'First name must be between 3 and 50 characters.'
+            })
+            hasErrors = true;
+        }
+        if (this.state.lastName.length > 50 || this.state.lastName.length < 3) {
+            this.setState({
+                errorMessage: 'Last name must be between 3 and 50 characters.'
+            })
+            hasErrors = true;
+        }
+        if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)) {
+            this.setState({
+                errorMessage: 'Please enter a valid email address.'
+            })
+            hasErrors = true;
+        }
+        
+        
+        // if (this.state.email !== mailFormat) {
+        //     this.setState({
+        //         errorMessage: 'Please enter a valid email address.'
+        //     })
+        //     hasErrors = true;
+        // }
+
         return hasErrors;
+    }
+
+    errorResponseIsDuplicateEmail = async response => {
+        const errBody = await response.json()
+
+        return response.status === 400 &&
+            errBody.name.toLowerCase() === "mongoerror" &&
+            errBody.keyValue.email &&
+            errBody.code === 11000
     }
 
     handleLoginButtonClick = event => {
@@ -62,15 +98,13 @@ class Signup extends Component {
                 return response.json()  //we only get here if there is no error
             })
             .then(user => console.log('GOT this user', user))
-            .catch(err => {
-                if (err.status === 401) {
+            .catch(async err => {
+                if (await this.errorResponseIsDuplicateEmail(err)) {
                     this.setState({
-                        errorMessage: 'Login failed. Please try again.'
+                        errorMessage: 'This user already exists. Please try again.'
                     })
                 }
 
-                console.log('sorry, got an error', err)
-                return;
             })
         this.setState({
             errorMessage: '',
@@ -80,7 +114,7 @@ class Signup extends Component {
             password: '',
             confirmPassword: ''
         })
-        alert('signup successful.')
+        // alert('signup successful.')
     }
 
     render() {
