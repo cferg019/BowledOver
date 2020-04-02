@@ -1,0 +1,42 @@
+[
+    {
+        "number": 1,
+        "scores": [4, 4]
+    },
+    {
+        "number": 2,
+        "scores": [3, "/"]
+    },
+    {
+        "number": 3,
+        "scores": ["X"]
+    },
+    {
+        "number": 4,
+        "scores": ["X"]
+    },
+    {
+        "number": 5,
+        "scores": ["X"]
+    },
+    {
+        "number": 6,
+        "scores": [4, 4]
+    },
+    {
+        "number": 7,
+        "scores": [4, "/"]
+    },
+    {
+        "number": 8,
+        "scores": [0, 0]
+    },
+    {
+        "number": 9,
+        "scores": ["X"]
+    },
+    {
+        "number": 10,
+        "scores": ["X", 2, "/"]
+    }
+]
