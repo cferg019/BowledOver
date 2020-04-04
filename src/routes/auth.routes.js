@@ -38,9 +38,9 @@ router.get('/verify/email/:emailAddress/token/:token', async (req, res, next) =>
 })
 
 // Route for logging user out
-router.post("/logout", function (req, res) {
+router.get("/logout", function (req, res) {
     req.logout()
-    res.redirect(`${process.env.BASE_APP_URL}/login`)
+    res.status(200).send('logged out')
 })
 
 module.exports = router

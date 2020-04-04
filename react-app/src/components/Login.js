@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 import './Login.css';
 
 
@@ -7,7 +8,8 @@ class Login extends Component {
         email: '',
         password: '',
         isSubmitted: false,
-        errorMessage: ''
+        errorMessage: '',
+        redirect: null
     }
 
     handleInputChange = event => {
@@ -23,6 +25,7 @@ class Login extends Component {
             email: this.state.email,
             password: this.state.password
         }
+        const self = this
         fetch(`/auth/login`, {
             method: 'post',
             headers: {
@@ -35,7 +38,10 @@ class Login extends Component {
                 if (!response.ok) { throw response }
                 return response.json()  //we only get here if there is no error
             })
-            .then(user => console.log('GOT this user', user))
+            .then(function(user) {
+                self.props.setGlobalUser(user)
+                self.setState({ redirect: '/home' })
+            })
             .catch(err => {
                 if (err.status === 401) {
                     this.setState({
@@ -44,10 +50,12 @@ class Login extends Component {
                 }
                 console.log('sorry, got an error', err)
             })
-            alert('login successful')
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect}/>
+        }
         return (
             < div className="container">
                 <div className="row">

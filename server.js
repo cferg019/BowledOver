@@ -22,6 +22,7 @@ const alleyRoutes = require('./src/routes/alley.routes')
 const opponentRoutes = require('./src/routes/opponent.routes')
 const gameRoutes = require('./src/routes/game.routes')
 const authRoutes = require('./src/routes/auth.routes')
+const authMiddleware = require('./src/middleware/auth-middleware')
 
 require('./src/config/passport')
 
@@ -36,13 +37,13 @@ app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'react-app', 'build')))
 app.use(bodyParser.json())
 
-app.use('/api/user', userRoutes)
-app.use('/api/user', ballRoutes)
-app.use('/api/user', alleyRoutes)
-app.use('/api/user', opponentRoutes)
-app.use('/api/session', sessionRoutes)
-app.use('/api/session', gameRoutes)
-app.use('/api/session', frameRoutes)
+app.use('/api/user', authMiddleware, userRoutes)
+app.use('/api/user', authMiddleware, ballRoutes)
+app.use('/api/user', authMiddleware, alleyRoutes)
+app.use('/api/user', authMiddleware, opponentRoutes)
+app.use('/api/session', authMiddleware, sessionRoutes)
+app.use('/api/session', authMiddleware, gameRoutes)
+app.use('/api/session', authMiddleware, frameRoutes)
 
 app.use('/auth', authRoutes)
 
