@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 
 import './App.css';
-import Jumbotron from './components/Jumbotron'
 import Home from './components/Home'
 import Login from './components/Login'
 import Signup from './components/Signup'
-
+import Verified from './components/Verified'
 import Session from './components/Session'
 import Game from './components/Game'
 import NavBar from './components/NavBar'
 import CheckingAuth from './components/CheckingAuth'
+import Profile from './components/Profile'
+import PostSignup from './components/PostSignup'
 
 let self = null
 
@@ -72,6 +73,15 @@ class App extends Component {
               <Game />
             </Route>
             <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
+            <Route path="/verified">
+              <Verified />
+            </Route>
+            <Route path="/postsignup">
+              <PostSignup />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
           </Switch>
         </div>
       </Router>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Jumbotron from './Jumbotron'
 import Select from 'react-select';
 import Frames from './Frames'
+
 // import { colourOptions } from '../data';
 
 const opponentChoices = [
@@ -61,3 +62,25 @@ function Game() {
 }
 
 export default Game;
+
+// import React, { Component } from 'react';
+
+// import { colourOptions } from '../data';
+
+// export default class CreatableMulti extends Component<*, State> {
+//   handleChange = (newValue: any, actionMeta: any) => {
+//     console.group('Value Changed');
+//     console.log(newValue);
+//     console.log(`action: ${actionMeta.action}`);
+//     console.groupEnd();
+//   };
+//   render() {
+//     return (
+//       <CreatableSelect
+//         isMulti
+//         onChange={this.handleChange}
+//         options={colourOptions}
+//       />
+//     );
+//   }
+// }
