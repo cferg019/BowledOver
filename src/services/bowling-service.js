@@ -14,6 +14,7 @@ const getTotalScore = frames => {
     return calculateScores(allScores)
 }
 
+
 function calculateScores(scores) {
     let totalScore = 0
     let scoreMultiplier = []
