@@ -1,0 +1,32 @@
+
+th {
+    background-color: rgb(247, 247, 247);
+}
+
+.throwsRow {
+    height: 30px;
+}
+
+.scoreRow {
+    height: 100px;
+}
+
+.throw:hover {
+    background-color: #ffddcf;
+}
+
+.throw:hover .selected {
+    background-color:  #ffa07a;
+}
+
+.selected {
+    background-color:  #ffa07a;
+}
+
+.btn {
+    margin-right: 5px;
+}
+
+.btn-col {
+    text-align: center;
+}

@@ -9,8 +9,6 @@ import Signup from './components/Signup'
 
 import Session from './components/Session'
 import Game from './components/Game'
-import Frame from './components/Frame'
-import logo from './logo.svg'
 
 class App extends Component {
   state = {
@@ -26,6 +24,12 @@ class App extends Component {
           </Route>
           <Route path="/signup">
             <Signup />
+          </Route>
+          <Route path="/session">
+            <Session />
+          </Route>
+          <Route path="/game">
+            <Game />
           </Route>
           <PrivateRoute path="/" component={Home} isAuthenticated={this.state.isAuthenticated}/>
         </Switch>
