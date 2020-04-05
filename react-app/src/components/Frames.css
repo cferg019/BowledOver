@@ -4,7 +4,7 @@ th {
 }
 
 .throwsRow {
-    height: 30px;
+    height: 45px;
 }
 
 .scoreRow {
@@ -17,6 +17,10 @@ th {
 
 .throw:hover .selected {
     background-color:  #ffa07a;
+}
+
+.disabled:hover {
+    background-color: lightgray;
 }
 
 .selected {
