@@ -71,6 +71,8 @@ class Frames extends Component {
         let newButtons = this.getButtonsForThrow(button.value, newSelected)
 
         this.setState({ frameThrows: frameThrowsCopy, selected: newSelected, buttons: newButtons })
+        // Update the game component with updated throws
+        this.props.setFrames(frameThrowsCopy)
     }
 
     getButtonsForThrow(buttonValue, selected) {
