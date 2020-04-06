@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import Jumbotron from './Jumbotron'
-import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable'
 import Frames from './Frames'
-
-// import { colourOptions } from '../data';
 
 const opponentChoices = [
     { value: 'doug', label: 'Doug' },
@@ -17,11 +15,18 @@ const ballChoices = [
     { value: 'the hammer', label: 'The Hammer' }
 ]
 
+let self
+
 class Game extends Component {
     state = {
         ballsUsed: [],
         opponents: [],
         frames: []
+    }
+
+    constructor(props) {
+        super(props)
+        self = this
     }
 
     setFrames(flatFrames) {
@@ -48,8 +53,8 @@ class Game extends Component {
         frames.push({
             number: 10,
             scores: [
-                flatFrames[18].displayValue, 
-                flatFrames[19].displayValue, 
+                flatFrames[18].displayValue,
+                flatFrames[19].displayValue,
                 flatFrames[20].displayValue
             ]
                 .filter(score => score !== '')
@@ -57,7 +62,23 @@ class Game extends Component {
 
         frames = frames.filter(frame => frame.scores.length > 0)
         console.log('new frames', frames)
-        this.setState({ frames })
+        self.setState({ frames })
+    }
+
+    handleBallsUsedChange(newValue, actionMeta) {
+        if (actionMeta.action === 'create-option') {
+            console.log('creating new ball', newValue)
+        } else {
+            console.log('selected existing ball', newValue)
+        }
+    }
+
+    handleOpponentsChange(newValue, actionMeta) {
+        if (actionMeta.action === 'create-option') {
+            console.log('creating new opp', newValue)
+        } else {
+            console.log('selected existing opp', newValue)
+        }
     }
 
     render() {
@@ -71,13 +92,15 @@ class Game extends Component {
                     </div>
                     <div className="col-md-9">
 
-                        <Select
+                        <CreatableSelect
                             isMulti
                             name="colors"
                             options={opponentChoices}
                             className="basic-multi-select"
                             classNamePrefix="select"
                             id="opponents"
+                            onChange={this.handleOpponentsChange}
+
                         />
                     </div>
                     <div className="col-md-2">
@@ -92,13 +115,15 @@ class Game extends Component {
                         <label for="balls">Balls</label>
                     </div>
                     <div className="col-md-9">
-                        <Select
+                        <CreatableSelect
                             isMulti
                             name="colors"
                             options={ballChoices}
                             className="basic-multi-select"
                             classNamePrefix="select"
                             id="balls"
+                            onChange={this.handleBallsUsedChange}
+
                         />
                     </div>
                     <div className="col-md-2">
@@ -115,25 +140,3 @@ class Game extends Component {
 }
 
 export default Game;
-
-// import React, { Component } from 'react';
-
-// import { colourOptions } from '../data';
-
-// export default class CreatableMulti extends Component<*, State> {
-//   handleChange = (newValue: any, actionMeta: any) => {
-//     console.group('Value Changed');
-//     console.log(newValue);
-//     console.log(`action: ${actionMeta.action}`);
-//     console.groupEnd();
-//   };
-//   render() {
-//     return (
-//       <CreatableSelect
-//         isMulti
-//         onChange={this.handleChange}
-//         options={colourOptions}
-//       />
-//     );
-//   }
-// }
