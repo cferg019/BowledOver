@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Jumbotron from './Jumbotron'
 import { Link } from 'react-router-dom'
 import CreatableSelect from 'react-select/creatable'
+import Navbar from './NavBar'
 
 const alleyChoices = [
     { value: 'Brookfield Lanes', label: 'Brookfield Lanes' },
@@ -21,28 +22,31 @@ class Session extends Component {
     render() {
         return (
             <div className="container">
+                <Navbar />
                 <Jumbotron />
                 <hr></hr>
                 <div className='col-md-10 offset-md-1'>
+                    <h4>Where are you bowling today?</h4>
+                    <div>Select from the drop down below, or type to add a new location.</div>
                     <CreatableSelect
-                        isMulti
+                        isClearable
                         name="colors"
                         options={alleyChoices}
-                        className="basic-multi-select"
                         classNamePrefix="select"
-                        id="opponents"
+                        id="alleys"
                         onChange={this.handleOpponentsChange}
-
                     />
                 </div>
-                {/* <p>Where are you bowling today?</p>
-            <div className="input-group mb-3">
-                <input type="text" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
-            </div> */}
                 <hr></hr>
-                <Link className="new-session" to="/game">
-                    <button type="button" className="btn btn-outline-dark">Start New Game</button>
-                </Link>
+                <div className='col-md-10 offset-md-1'>
+                    <Link className="new-session" to="/game">
+                        <button type="button" className="btn btn-outline-dark">Start New Game</button>
+                    </Link>
+                    <Link className="new-session" to="/home">
+                        <button type="button" className="btn btn-outline-dark">Return Home</button>
+                    </Link>
+                </div>
+                <hr></hr>
             </div>
         )
     }

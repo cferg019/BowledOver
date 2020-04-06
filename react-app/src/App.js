@@ -54,14 +54,14 @@ class App extends Component {
 
   render() {
     if (this.state.isCheckingAuth) {
-      return <CheckingAuth/>
+      return <CheckingAuth />
     }
     return (
       <Router>
         <div>
           <Switch>
             <Route path="/login">
-              <Login setGlobalUser={this.setGlobalUser}/>
+              <Login setGlobalUser={this.setGlobalUser} />
             </Route>
             <Route path="/signup">
               <Signup />
