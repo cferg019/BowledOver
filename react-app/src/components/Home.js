@@ -1,5 +1,6 @@
 import React from 'react';
 import Jumbotron from './Jumbotron'
+import { Link } from 'react-router-dom'
 
 function Home() {
     return (
@@ -9,13 +10,10 @@ function Home() {
     )
 }
 
-// import React from 'react';
-// import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-
 const BasicTable = () => {
     return (
         <div className='container'>
-            <Jumbotron/>
+            <Jumbotron />
             <hr></hr>
             <table>
                 <tbody>
@@ -46,7 +44,10 @@ const BasicTable = () => {
                 </tbody>
             </table>
             <hr></hr>
-            <button type="button" className="btn btn-outline-dark">Start New Session</button>
+            <Link className="new-session" to="/session">
+                <button type="button" className="btn btn-outline-dark">Start New Session</button>
+            </Link>
+
         </div>
     );
 }
