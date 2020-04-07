@@ -87,7 +87,7 @@ class Game extends Component {
                 <Jumbotron />
                 <hr></hr>
                 <div className="row">
-                    <div className="col-md-1">
+                    <div className="col-md-1 offset-md-1">
                         <label for="opponents">Opponents</label>
                     </div>
                     <div className="col-md-9">
@@ -103,15 +103,10 @@ class Game extends Component {
 
                         />
                     </div>
-                    <div className="col-md-2">
-                        <button type="button" className="btn btn-outline-dark" style={{ width: "100%" }}>New Opponent</button>
-                    </div>
                 </div>
-
                 <hr></hr>
-
                 <div className="row">
-                    <div className="col-md-1">
+                    <div className="col-md-1 offset-md-1">
                         <label for="balls">Balls</label>
                     </div>
                     <div className="col-md-9">
@@ -123,17 +118,11 @@ class Game extends Component {
                             classNamePrefix="select"
                             id="balls"
                             onChange={this.handleBallsUsedChange}
-
                         />
                     </div>
-                    <div className="col-md-2">
-                        <button type="button" className="btn btn-outline-dark" style={{ width: "100%" }}>New Ball</button>
-                    </div>
                 </div>
-
                 <hr></hr>
                 <Frames setFrames={this.setFrames} />
-
             </div>
         )
     }

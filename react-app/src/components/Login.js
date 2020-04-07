@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
 import './Login.css';
+import { Link } from 'react-router-dom'
 
 
 class Login extends Component {
@@ -38,7 +39,7 @@ class Login extends Component {
                 if (!response.ok) { throw response }
                 return response.json()  //we only get here if there is no error
             })
-            .then(function(user) {
+            .then(function (user) {
                 self.props.setGlobalUser(user)
                 self.setState({ redirect: '/home' })
             })
@@ -54,7 +55,7 @@ class Login extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Redirect to={this.state.redirect}/>
+            return <Redirect to={this.state.redirect} />
         }
         return (
             < div className="container">
@@ -73,7 +74,9 @@ class Login extends Component {
                                 <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Login" />
                             </div>
                             <div className="form-group">
-                                <a href="#" className="ForgetPwd">Forget Password?</a>
+                                <Link className="sign-up-button" to="/signup">
+                                    <input type="submit" className="btnSubmit" value="Sign Up Here" />
+                                </Link>
                             </div>
                         </form>
                     </div>

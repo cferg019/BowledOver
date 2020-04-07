@@ -72,7 +72,6 @@ class App extends Component {
             <Route path="/game">
               <Game />
             </Route>
-            <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
             <Route path="/verified">
               <Verified />
             </Route>
@@ -82,6 +81,8 @@ class App extends Component {
             <Route path="/profile">
               <Profile />
             </Route>
+            <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
+
           </Switch>
         </div>
       </Router>
