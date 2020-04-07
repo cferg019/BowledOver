@@ -24,27 +24,27 @@ router.get('/', async (req, res, next) => {
 })
 
 // Modify user
-router.put('/:id', async (req, res, next) => {
+router.put('/', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, userJoiSchema)
         if (error) return res.status(400).json(error)
-        const updatedUser = await User.findOneAndUpdate({ _id: req.params.id }, value, { new: true })
+        const updatedUser = await User.findOneAndUpdate({ _id: req.user.id }, value, { new: true })
         if (!updatedUser) return res.status(404).send('Not Found')
         res.json(updatedUser)
     } catch (err) {
         next(err)
     }
 })
-// Delete user
-router.delete('/:id', async (req, res, next) => {
-    try {
-        const deletedUser = await User.findOneAndDelete({ _id: req.params.id })
-        if (!deletedUser) return res.status(404).send('Not Found')
-        res.send('Deleted')
-    } catch (err) {
-        next(err)
-    }
-})
+// // Delete user
+// router.delete('/:id', async (req, res, next) => {
+//     try {
+//         const deletedUser = await User.findOneAndDelete({ _id: req.params.id })
+//         if (!deletedUser) return res.status(404).send('Not Found')
+//         res.send('Deleted')
+//     } catch (err) {
+//         next(err)
+//     }
+// })
 
 router.get('/stats', async (req, res, next) => {
     try {

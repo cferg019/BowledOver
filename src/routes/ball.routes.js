@@ -6,9 +6,9 @@ const joi = require('joi')
 const router = Router()
 
 // Get all balls for user
-router.get('/:userId/balls', async (req, res, next) => {
+router.get('/balls', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         res.json(user.balls)
     } catch (err) {
@@ -17,9 +17,9 @@ router.get('/:userId/balls', async (req, res, next) => {
 })
 
 // Get a single ball for a user
-router.get('/:userId/balls/:ballId', async (req, res, next) => {
+router.get('/balls/:ballId', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         const theBall = user.balls.find(ball => ball._id.toString() === req.params.ballId)
         if (!theBall) return res.status(404).send('Ball Not Found for User')
@@ -29,11 +29,11 @@ router.get('/:userId/balls/:ballId', async (req, res, next) => {
     }
 })
 
-router.post('/:userId/balls', async (req, res, next) => {
+router.post('/balls', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, ballJoiSchema)
         if (error) return res.status(400).json(error)
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         // Get all of the current ball ids
         const currentBallIds = user.balls.map(ball => ball._id.toString())
@@ -50,12 +50,12 @@ router.post('/:userId/balls', async (req, res, next) => {
 
 
 
-router.put('/:userId/balls/:ballId', async (req, res, next) => {
+router.put('/balls/:ballId', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, ballJoiSchema)
         if (error) return res.status(400).json(error)
         const updatedUser = await User.findOneAndUpdate(
-            { _id: req.params.userId, "balls._id": req.params.ballId },
+            { _id: req.user.id, "balls._id": req.params.ballId },
             {
                 $set: {
                     "balls.$": value
@@ -71,9 +71,9 @@ router.put('/:userId/balls/:ballId', async (req, res, next) => {
     }
 })
 
-router.delete('/:userId/balls/:ballId', async (req, res, next) => {
+router.delete('/balls/:ballId', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         if (!user.balls.find(b => b._id.toString() === req.params.ballId)) {
             return res.status(404).send('Not found')
