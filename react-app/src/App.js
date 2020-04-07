@@ -67,9 +67,7 @@ class App extends Component {
             <Route path="/signup">
               <Signup />
             </Route>
-            <Route path="/session">
-              <Session />
-            </Route>
+            <PrivateRoute path="/session/:sessionId" user={this.state.user} component={Session} isAuthenticated={this.state.isAuthenticated} />
             <Route path="/game">
               <Game />
             </Route>

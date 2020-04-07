@@ -16,6 +16,7 @@ router.post('/', async (req, res, next) => {
         if (error) return res.status(400).json(error)
         // force the user id to be the right user id
         value.userId = req.user.id
+        console.log('posting new session', value)
         const newSession = await Session.create(value)
         res.json(newSession)
     } catch (err) {
