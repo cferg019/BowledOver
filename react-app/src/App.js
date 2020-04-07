@@ -12,6 +12,7 @@ import NavBar from './components/NavBar'
 import CheckingAuth from './components/CheckingAuth'
 import Profile from './components/Profile'
 import PostSignup from './components/PostSignup'
+import SessionHistory from './components/SessionHistory';
 
 let self = null
 
@@ -80,6 +81,9 @@ class App extends Component {
             </Route>
             <Route path="/profile">
               <Profile />
+            </Route>
+            <Route path="/sessionhistory">
+              <SessionHistory />
             </Route>
             <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
 
