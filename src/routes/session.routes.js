@@ -22,8 +22,14 @@ router.post('/', async (req, res, next) => {
 })
 
 // Delete me
-router.get('/', (req, res) => {
-    res.send('Hello Casey')
+router.get('/', async (req, res) => {
+    try {
+        const sessions = await Session.find({ userId: req.user.id })
+        if (!sessions) return res.status(404).send('Not Found')
+        res.json(sessions)
+    } catch (err) {
+        next(err)
+    } 
 })
 
 // Get session by id

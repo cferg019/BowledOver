@@ -1,6 +1,8 @@
 const { Router } = require('express')
 const { model: User, joiSchema: userJoiSchema } = require('../models/user.model')
+const { model: Session } = require('../models/session.model')
 const joi = require('joi')
+const bowlingService = require('../services/bowling-service')
 
 const router = Router()
 
@@ -39,6 +41,23 @@ router.delete('/:id', async (req, res, next) => {
         const deletedUser = await User.findOneAndDelete({ _id: req.params.id })
         if (!deletedUser) return res.status(404).send('Not Found')
         res.send('Deleted')
+    } catch (err) {
+        next(err)
+    }
+})
+
+router.get('/stats', async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id)
+        const userSessions = await Session.find({ userId: req.user.id })
+        res.json({
+            topScore: bowlingService.getHighScore(userSessions),
+            lowestScore: bowlingService.getLowestScore(userSessions),
+            averageScore: bowlingService.getAverageScore(userSessions),
+            playerYouDoTheBestAgainst: bowlingService.getPlayerYouDoTheBestAgainst(userSessions, user.commonOpponents),
+            playerYouDoTheWorstAgainst: bowlingService.getPlayerYouDoTheWorstAgainst(userSessions, user.commonOpponents),
+            mostCommonOpponent: bowlingService.getMostCommonOpponent(userSessions, user.commonOpponents)
+        })
     } catch (err) {
         next(err)
     }
