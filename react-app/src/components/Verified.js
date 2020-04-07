@@ -6,12 +6,13 @@ const Verified = () => {
     return (
         <div className='container'>
             <Jumbotron/>
-            <div className='col-md-4 offset-md-4'>
+
+            <div className='col-md-4 offset-md-4 verified'>
                 Great! Thanks for verifying your email!
                 <br></br>
                 <Link className="" to="/login">
                 <button type="button" className="btn btn-outline-dark">Take Me To The Login Page</button>
-            </Link>
+                </Link>
             </div>
         </div>
     )

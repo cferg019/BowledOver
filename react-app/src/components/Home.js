@@ -47,7 +47,6 @@ const BasicTable = () => {
             <Link className="new-session" to="/session">
                 <button type="button" className="btn btn-outline-dark">Start New Session</button>
             </Link>
-
         </div>
     );
 }

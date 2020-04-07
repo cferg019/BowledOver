@@ -35,7 +35,7 @@ class NavBar extends Component {
                                 {`${this.props.firstName} ${this.props.lastName}`}
                             </a>
                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a className="dropdown-item" href="#">Profile</a>
+                                <a className="dropdown-item" href="/profile">Profile</a>
                                 <a className="dropdown-item" href="#" onClick={this.logout}>Logout</a>
                             </div>
                         </li>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Signup.css';
-
+import { Link } from 'react-router-dom'
 
 class Signup extends Component {
     state = {
@@ -53,8 +53,8 @@ class Signup extends Component {
             })
             hasErrors = true;
         }
-        
-        
+
+
         // if (this.state.email !== mailFormat) {
         //     this.setState({
         //         errorMessage: 'Please enter a valid email address.'
@@ -140,9 +140,14 @@ class Signup extends Component {
                                 <input onChange={this.handleInputChange} type="password" className="form-control" name="confirmPassword" placeholder="Retype Password *" value={this.state.confirmPassword} />
                             </div>
                             <p>{this.state.errorMessage}</p>
-                            <div className="form-group">
-                                <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Sign Up" />
-                            </div>
+                                <div className="form-group">
+                                    <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Sign Up" />
+                                </div>
+                                <div className="form-group">
+                                    <Link className="login-button" to="/login">
+                                        <input type="submit" className="btnSubmit" value="Login Here" />
+                                    </Link>
+                                </div>
                         </form>
                     </div>
                 </div>
