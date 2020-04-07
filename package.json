@@ -8,8 +8,9 @@
     "start:react": "cd react-app && npm start",
     "prestart": "npm run build:react",
     "start": "node server.js",
-    "start:dev": "nodemon server.js",
-    "start:dev:all": "npm-run-all -p start:react start:dev",
+    "seed": "node ./test/test-game-data/seed.js",
+    "start:dev": "npm run seed && nodemon server.js",
+    "start:dev:all": "npm run seed && npm-run-all -p start:react start:dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

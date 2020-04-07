@@ -24,6 +24,7 @@ gameSchema.virtual('totalScore').get(function() {
 })
 
 gameSchema.set('toJSON', {virtuals: true})
+gameSchema.set('toObject', {virtuals: true})
 
 module.exports = {
     mongooseSchema: gameSchema,
