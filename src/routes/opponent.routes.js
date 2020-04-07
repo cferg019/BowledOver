@@ -6,9 +6,9 @@ const joi = require('joi')
 const router = Router()
 
 // Get all opponents for user
-router.get('/:userId/common-opponents', async (req, res, next) => {
+router.get('/common-opponents', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         res.json(user.commonOpponents)
     } catch (err) {
@@ -17,9 +17,9 @@ router.get('/:userId/common-opponents', async (req, res, next) => {
 })
 
 // Get a single opponent for a user
-router.get('/:userId/common-opponents/:opponentId', async (req, res, next) => {
+router.get('/common-opponents/:opponentId', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         const theOpponent = user.commonOpponents.find(opponent => opponent._id.toString() === req.params.opponentId)
         if (!theOpponent) return res.status(404).send('Opponent Not Found for User')
@@ -29,11 +29,11 @@ router.get('/:userId/common-opponents/:opponentId', async (req, res, next) => {
     }
 })
 
-router.post('/:userId/common-opponents', async (req, res, next) => {
+router.post('/common-opponents', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, opponentJoiSchema)
         if (error) return res.status(400).json(error)
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         // Get all of the current opponent ids
         const currentOpponentIds = user.commonOpponents.map(opponent => opponent._id.toString())
@@ -50,12 +50,12 @@ router.post('/:userId/common-opponents', async (req, res, next) => {
 
 
 
-router.put('/:userId/common-opponents/:opponentId', async (req, res, next) => {
+router.put('/common-opponents/:opponentId', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, opponentJoiSchema)
         if (error) return res.status(400).json(error)
         const updatedUser = await User.findOneAndUpdate(
-            { _id: req.params.userId, "commonOpponents._id": req.params.opponentId },
+            { _id: req.user.id, "commonOpponents._id": req.params.opponentId },
             {
                 $set: {
                     "commonOpponents.$": value
@@ -73,7 +73,7 @@ router.put('/:userId/common-opponents/:opponentId', async (req, res, next) => {
 
 router.delete('/:userId/common-opponents/:opponentId', async(req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         if (!user.commonOpponents.find(b => b._id.toString() === req.params.opponentId)) {
             return res.status(404).send('Not found')

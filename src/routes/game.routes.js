@@ -8,7 +8,7 @@ const router = Router()
 // Get all games for session
 router.get('/:sessionId/game', async (req, res, next) => {
     try {
-        const session = await Session.findById(req.params.sessionId)
+        const session = await Session.findOne({ _id: req.params.sessionId, userId: req.user.id })
         if (!session) return res.status(404).send('Not Found')
         res.json(session.games)
     } catch (err) {
@@ -19,7 +19,7 @@ router.get('/:sessionId/game', async (req, res, next) => {
 // Get a single game for a session
 router.get('/:sessionId/game/:gameId', async (req, res, next) => {
     try {
-        const session = await Session.findById(req.params.sessionId)
+        const session = await Session.findOne({ _id: req.params.sessionId, userId: req.user.id })
         if (!session) return res.status(404).send('Session Not Found')
         const theGame = session.games.find(game => game._id.toString() === req.params.gameId)
         if (!theGame) return res.status(404).send('Game Not Found for Session')
@@ -33,7 +33,7 @@ router.post('/:sessionId/game', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, gameJoiSchema)
         if (error) return res.status(400).json(error)
-        const session = await Session.findById(req.params.sessionId)
+        const session = await Session.findOne({ _id: req.params.sessionId, userId: req.user.id })
         if (!session) return res.status(404).send('Session Not Found')
         // Get all of the current game ids
         const currentGameIds = session.games.map(game => game._id.toString())
@@ -55,7 +55,7 @@ router.put('/:sessionId/game/:gameId', async (req, res, next) => {
         const { error, value } = joi.validate(req.body, gameJoiSchema)
         if (error) return res.status(400).json(error)
         const updatedSession = await Session.findOneAndUpdate(
-            { _id: req.params.sessionId, "games._id": req.params.gameId },
+            { userId: req.user.id, _id: req.params.sessionId, "games._id": req.params.gameId },
             {
                 $set: {
                     "games.$": value
@@ -75,7 +75,7 @@ router.put('/:sessionId/game/:gameId', async (req, res, next) => {
 
 router.delete('/:sessionId/game/:gameId', async (req, res, next) => {
     try {
-        const session = await Session.findById(req.params.sessionId)
+        const session = await Session.findOne({ _id: req.params.sessionId, userId: req.user.id })
         if (!session) return res.status(404).send('Not Found')
         if (!session.games.find(b => b._id.toString() === req.params.gameId)) {
             return res.status(404).send('Not found')

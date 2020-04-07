@@ -6,9 +6,9 @@ const joi = require('joi')
 const router = Router()
 
 // Get all alleys for user
-router.get('/:userId/alleys', async (req, res, next) => {
+router.get('/alleys', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         res.json(user.alleys)
     } catch (err) {
@@ -17,9 +17,9 @@ router.get('/:userId/alleys', async (req, res, next) => {
 })
 
 // Get a single alley for a user
-router.get('/:userId/alleys/:alleyId', async (req, res, next) => {
+router.get('/alleys/:alleyId', async (req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         const theAlley = user.alleys.find(alley => alley._id.toString() === req.params.alleyId)
         if (!theAlley) return res.status(404).send('Alley Not Found for User')
@@ -29,11 +29,11 @@ router.get('/:userId/alleys/:alleyId', async (req, res, next) => {
     }
 })
 
-router.post('/:userId/alleys', async (req, res, next) => {
+router.post('/alleys', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, alleyJoiSchema)
         if (error) return res.status(400).json(error)
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('User Not Found')
         // Get all of the current alley ids
         const currentAlleyIds = user.alleys.map(alley => alley._id.toString())
@@ -50,12 +50,12 @@ router.post('/:userId/alleys', async (req, res, next) => {
 
 
 
-router.put('/:userId/alleys/:alleyId', async (req, res, next) => {
+router.put('/alleys/:alleyId', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, alleyJoiSchema)
         if (error) return res.status(400).json(error)
         const updatedUser = await User.findOneAndUpdate(
-            { _id: req.params.userId, "alleys._id": req.params.alleyId },
+            { _id: req.user.id, "alleys._id": req.params.alleyId },
             {
                 $set: {
                     "alleys.$": value
@@ -71,9 +71,9 @@ router.put('/:userId/alleys/:alleyId', async (req, res, next) => {
     }
 })
 
-router.delete('/:userId/alleys/:alleyId', async(req, res, next) => {
+router.delete('/alleys/:alleyId', async(req, res, next) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.user.id)
         if (!user) return res.status(404).send('Not Found')
         if (!user.alleys.find(b => b._id.toString() === req.params.alleyId)) {
             return res.status(404).send('Not found')

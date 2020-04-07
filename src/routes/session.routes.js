@@ -14,6 +14,8 @@ router.post('/', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, sessionJoiSchema)
         if (error) return res.status(400).json(error)
+        // force the user id to be the right user id
+        value.userId = req.user.id
         const newSession = await Session.create(value)
         res.json(newSession)
     } catch (err) {
@@ -35,7 +37,8 @@ router.get('/', async (req, res) => {
 // Get session by id
 router.get('/:id', async (req, res, next) => {
     try {
-        const session = await Session.findById(req.params.id)
+        console.log('finding with use rid', req.user.id)
+        const session = await Session.findOne({ _id: req.params.id, userId: req.user.id })
         if (!session) return res.status(404).send('Not Found')
         res.json(session)
     } catch (err) {
@@ -43,21 +46,12 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-// Get the user that the session belongs to 
-router.get('/:id/user', async (req, res, next) => {
-    const session = await Session.findById(req.params.id)
-    if (!session) return res.status(404).send('Not Found')
-    const user = await User.findById(session.userId)
-    if (!user) return res.status(404).send('This user does not exist.')
-    res.json(user)
-})
-
 // Modify session
 router.put('/:id', async (req, res, next) => {
     try {
         const { error, value } = joi.validate(req.body, sessionJoiSchema)
         if (error) return res.status(400).json(error)
-        const updatedSession = await Session.findOneAndUpdate({ _id: req.params.id }, value, { new: true })
+        const updatedSession = await Session.findOneAndUpdate({ _id: req.params.id, userId: req.user.id }, value, { new: true })
         if (!updatedSession) return res.status(404).send('Not Found')
         res.json(updatedSession)
     } catch (err) {
@@ -67,7 +61,7 @@ router.put('/:id', async (req, res, next) => {
 // Delete session
 router.delete('/:id', async (req, res, next) => {
     try {
-        const deletedSession = await Session.findOneAndDelete({ _id: req.params.id })
+        const deletedSession = await Session.findOneAndDelete({ _id: req.params.id, userId: req.user.id })
         if (!deletedSession) return res.status(404).send('Not Found')
         res.send('Deleted')
     } catch (err) {
