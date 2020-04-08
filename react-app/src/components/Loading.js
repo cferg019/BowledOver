@@ -1,10 +1,10 @@
 import React from 'react'
-import './CheckingAuth.css'
+import './Loading.css'
 
-function CheckingAuth() {
+function Loading() {
     return (
         <div className="loading">Loading&#8230;</div>
     )
 }
 
-export default CheckingAuth
+export default Loading

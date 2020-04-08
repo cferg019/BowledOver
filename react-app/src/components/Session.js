@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import Jumbotron from './Jumbotron'
 import { Link } from 'react-router-dom'
 import CreatableSelect from 'react-select/creatable'
-import Navbar from './NavBar'
+import Loading from './Loading'
+import Breadcrumbs from './Breadcrumbs'
+import './Session.css'
 
 const alleyChoices = [
     { value: 'Brookfield Lanes', label: 'Brookfield Lanes' },
@@ -19,7 +21,10 @@ class Session extends Component {
         },
         alleys: [],
         opponents: [],
-        selectedAlley: {}
+        selectedAlley: {},
+        isLoading: true,
+        successMessage: '',
+        errorMessage: ''
     }
 
     componentDidMount() {
@@ -33,7 +38,7 @@ class Session extends Component {
                 })
                 .then(alleys => {
                     console.log('got the alleys', alleys)
-                    this.setState({ alleys })
+                    this.setState({ alleys, isLoading: false })
                 })
                 .catch(err => console.error(err))
         } else {
@@ -72,7 +77,8 @@ class Session extends Component {
 
                 this.setState({
                     session,
-                    selectedAlley: session.alley
+                    selectedAlley: session.alley,
+                    isLoading: false
                 })
             })
             .catch(err => console.error(err))
@@ -82,18 +88,51 @@ class Session extends Component {
 
     handleAlleysChange(newValue, actionMeta) {
         if (actionMeta.action === 'create-option') {
+            this.createNewAlley(newValue.value)
             console.log('creating new alley', newValue)
         } else {
-            console.log('selected existing alley', newValue)
-        }
-        if (newValue) {
-            this.setState({ selectedAlley: this.state.alleys.find(alley => alley._id === newValue.value) })
-        } else {
-            this.setState({ selectedAlley: {}})
+            if (newValue) {
+                this.setState({ selectedAlley: this.state.alleys.find(alley => alley._id === newValue.value) })
+            } else {
+                this.setState({ selectedAlley: {} })
+            }
         }
     }
 
+    createNewAlley(name) {
+        const newAlley = {
+            name
+        }
+        fetch('/api/user/alleys', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'post',
+            body: JSON.stringify(newAlley)
+        })
+            .then(res => {
+                if (!res.ok) throw res
+                return res.json()
+            })
+            .then(createdAlley => {
+                console.log('created alley', createdAlley)
+                const newAlleys = [...this.state.alleys, createdAlley]
+                this.setState({
+                    alleys: newAlleys,
+                    selectedAlley: createdAlley
+                })
+            })
+            .catch(err => {
+                this.setState({ errorMessage: 'Sorry, something went wrong' })
+                console.error(err)
+            })
+    }
+
     saveSession() {
+        this.setState({
+            successMessage: '',
+            errorMessage: ''
+        })
         if (this.state.isNew && this.state.selectedAlley) {
             const alleyId = this.state.selectedAlley._id
             const newSession = {
@@ -115,10 +154,14 @@ class Session extends Component {
                     console.log('created session', createdSession)
                     this.setState({
                         isNew: false,
+                        successMessage: 'Session created successfully',
                         session: createdSession
                     })
                 })
-                .catch(err => console.error(err))
+                .catch(err => {
+                    this.setState({ errorMessage: 'Sorry, something went wrong' })
+                    console.error(err)
+                })
         }
         else if (this.state.session && this.state.selectedAlley) {
             const alleyId = this.state.selectedAlley._id
@@ -140,21 +183,49 @@ class Session extends Component {
                     return res.json()
                 })
                 .then(createdSession => {
-                    this.getSession(createdSession._id) 
+                    this.getSession(createdSession._id)
+                    this.setState({ successMessage: 'Session saved' })
                 })
                 .catch(err => console.error(err))
         }
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <Loading />
+        }
         return (
             <div className="container">
-                <Jumbotron />
+                <Breadcrumbs
+                    links={[
+                        { name: 'Home', address: '/' },
+                    ]}
+                    currentPage="Session"
+                />
                 <hr></hr>
                 <div className="row">
+                    <div className="col-sm-8 offset-md-1">
+                        <div>
+                            <h4>Pick an Alley</h4>
+                            <p>Select an alley from the drop down below, or type to add a new one</p>
+                        </div>
+                    </div>
+                    <div className="col-sm-2 float-sm-right">
+                        <button type="button" onClick={this.saveSession.bind(this)} className="btn btn-outline-dark btn-lg float-right">Save</button>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-sm-10 offset-md-1">
+                        {this.state.successMessage ? (<div className="alert alert-success" role="alert">
+                            {this.state.successMessage}
+                        </div>) : null}
+                        {this.state.errorMessage ? (<div className="alert alert-success" role="alert">
+                            {this.state.errorMessage}
+                        </div>) : null}
+                    </div>
+                </div>
+                <div className="row">
                     <div className='col-md-10 offset-md-1'>
-                        <h4>Pick an Alley</h4>
-                        <div>Select from the drop down below, or type to add a new location.</div>
                         <CreatableSelect
                             isClearable
                             name="colors"
@@ -164,8 +235,6 @@ class Session extends Component {
                             onChange={this.handleAlleysChange.bind(this)}
                             value={{ label: this.state.selectedAlley.name, value: this.state.selectedAlley._id }}
                         />
-                        <br />
-                        <button type="button" onClick={this.saveSession.bind(this)} className="btn btn-outline-dark">Save</button>
                     </div>
                 </div>
                 <hr />

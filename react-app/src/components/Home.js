@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Jumbotron from './Jumbotron'
 import { Link } from 'react-router-dom'
+import Loading from './Loading'
 
 class Home extends Component {
     state = {
@@ -11,7 +12,8 @@ class Home extends Component {
         playerYouDoTheWorstAgainst: "N/A",
         mostCommonOpponent: "N/A",
         sessions: [],
-        alleys: []
+        alleys: [],
+        isLoading: true
     }
 
     componentWillMount() {
@@ -47,13 +49,17 @@ class Home extends Component {
                     session.alley = tmpAlleys.find(alley => alley._id === session.alleyId)
                 })
                 this.setState({
-                    sessions
+                    sessions,
+                    isLoading: false
                 })
             })
             .catch(err => console.error(err))
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <Loading />
+        }
         return (
             <div className='container'>
                 <Jumbotron />

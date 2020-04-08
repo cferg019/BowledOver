@@ -9,7 +9,7 @@ import Verified from './components/Verified'
 import Session from './components/Session'
 import Game from './components/Game'
 import NavBar from './components/NavBar'
-import CheckingAuth from './components/CheckingAuth'
+import Loading from './components/Loading'
 import Profile from './components/Profile'
 import PostSignup from './components/PostSignup'
 import SessionHistory from './components/SessionHistory';
@@ -55,7 +55,7 @@ class App extends Component {
 
   render() {
     if (this.state.isCheckingAuth) {
-      return <CheckingAuth />
+      return <Loading />
     }
     return (
       <Router>
@@ -67,16 +67,16 @@ class App extends Component {
             <Route path="/signup">
               <Signup />
             </Route>
-            <PrivateRoute path="/session/:sessionId" user={this.state.user} component={Session} isAuthenticated={this.state.isAuthenticated} />
-            <Route path="/game">
-              <Game />
-            </Route>
             <Route path="/verified">
               <Verified />
             </Route>
             <Route path="/postsignup">
               <PostSignup />
             </Route>
+            <PrivateRoute path="/session/:sessionId/game/:gameId" user={this.state.user} component={Game} isAuthenticated={this.state.isAuthenticated} />
+            <PrivateRoute path="/session/:sessionId" user={this.state.user} component={Session} isAuthenticated={this.state.isAuthenticated} />
+            <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
+
             <Route path="/profile">
               <Profile />
             </Route>

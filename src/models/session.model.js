@@ -8,7 +8,7 @@ const joiSchema = joi.object().keys({
     alleyId: joi.string().length(24).required(),
     games: joi.array().items(gameJoiSchema),
     __v: joi.number()
-})
+}).options({ stripUnknown: true })
 
 const sessionSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },

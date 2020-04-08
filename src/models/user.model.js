@@ -16,7 +16,7 @@ const joiSchema = joi.object().keys({
     balls: joi.array().items(ballJoiSchema),
     alleys: joi.array().items(alleyJoiSchema),
     commonOpponents: joi.array().items(opponentJoiSchema)
-})
+}).options({ stripUnknown: true })
 
 const userSchema = new Schema({
     email: { type: String, require: true, unique: true },
