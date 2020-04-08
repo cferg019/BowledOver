@@ -8,7 +8,7 @@ const joiSchema = joi.object().keys({
     _id: joi.string().length(24),
     number: joi.number().valid(validFrameNumbers).required(),
     scores: joi.array().items(joi.any().valid(validScores)).max(3).required()
-})
+}).options({ stripUnknown: true })
 
 const frameSchema = new Schema({
     number: { type: Number, enum: validFrameNumbers, required: true },

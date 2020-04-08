@@ -9,7 +9,7 @@ const joiSchema = joi.object().keys({
     ballsUsed: joi.array().items(joi.string().length(24)), //Object Id
     players: joi.array().items(joi.string().length(24)), //Object id
     frames: joi.array().items(frameJoiSchema).max(10).required()
-})
+}).options({ stripUnknown: true })
 
 const gameSchema = new Schema({
     timePlayed: { type: Date },

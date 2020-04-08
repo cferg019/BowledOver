@@ -22,6 +22,7 @@ const alleyRoutes = require('./src/routes/alley.routes')
 const opponentRoutes = require('./src/routes/opponent.routes')
 const gameRoutes = require('./src/routes/game.routes')
 const authRoutes = require('./src/routes/auth.routes')
+const calcRoutes = require('./src/routes/calc.routes')
 const authMiddleware = require('./src/middleware/auth-middleware')
 
 require('./src/config/passport')
@@ -44,6 +45,7 @@ app.use('/api/user', authMiddleware, opponentRoutes)
 app.use('/api/session', authMiddleware, sessionRoutes)
 app.use('/api/session', authMiddleware, gameRoutes)
 app.use('/api/session', authMiddleware, frameRoutes)
+app.use('/api/calc', authMiddleware, calcRoutes)
 
 app.use('/auth', authRoutes)
 

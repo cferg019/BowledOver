@@ -20,6 +20,47 @@ class Frames extends Component {
         }))
     }
 
+    componentDidMount() {
+        this.setInitialFrameThrows(this.props.frames)
+    }
+
+    setInitialFrameThrows(frames) {
+        const frameThrows = [...this.state.frameThrows]
+        let frameNumber = 0
+        for (let i = 0; i < frameThrows.length; i++) {
+            if (i < 18) { // If it's not the 10th frame
+                let firstThrow = false
+                if (i % 2 === 0) { //start of a new frame
+                    frameNumber++
+                    firstThrow = true
+                }
+                const frame = frames.find(frame => frame.number === frameNumber)
+                if (frame) {
+                    if (firstThrow) {
+                        frameThrows[i].value = (frame.scores[0] === 'X') ? 10 : frame.scores[0]
+                        frameThrows[i].displayValue = frame.scores[0]
+                        frameThrows[i].disabled = (frame.scores[0] !== undefined) ? false : true
+                    } else {
+                        frameThrows[i].value = (frame.scores[0] === '/') ? (10 - frameThrows[i - 1].value) : frame.scores[1]
+                        frameThrows[i].displayValue = frame.scores[1]
+                        frameThrows[i].disabled = (frame.scores[1] !== undefined) ? false : true
+                    }
+                }
+            }
+        }
+        const tenthFrame = frames.find(frame => frame.number === 10)
+        if (tenthFrame) {
+            let i = 18
+            for (const score of tenthFrame.scores) {
+                frameThrows[i].value = (score === '/') ? (10 - frameThrows[i - 1].value) : score
+                frameThrows[i].displayValue = score
+                frameThrows[i].disabled = (score !== undefined) ? false : true
+                i++
+            }
+        }
+        this.setState({ frameThrows })
+    }
+
     selectScore(index) {
         console.log('clicked', index)
         if (!this.state.frameThrows[index].disabled) {
@@ -82,17 +123,17 @@ class Frames extends Component {
             disabled: false,
             value: key,
             displayValue: (key === 10) ? 'X' : key
-        })) 
+        }))
 
         // Tenth frame
         if (this.state.selected > 17) {
-            
+
         }
         // It's a strike, so return all possible values for the next throw
         if (selected % 2 === 0) {
             console.log('it should reset')
             return buttonsCopy
-        } 
+        }
         else if (buttonValue === 0) {
             buttonsCopy[10].displayValue = '/'
         }
@@ -131,12 +172,6 @@ class Frames extends Component {
                                     return (<td onClick={() => this.selectScore(i)} className={classes}>{this.state.frameThrows[i].displayValue}</td>)
                                 })}
                             </tr>
-                            <tr className="scoreRow">
-                                {frames.map(frame => {
-                                    const colspan = (frame === 10) ? '3' : '2'
-                                    return (<td className="score" colspan={colspan}>Score {frame}</td>)
-                                })}
-                            </tr>
 
                         </table>
                     </div>
@@ -146,15 +181,15 @@ class Frames extends Component {
                         {this.state.buttons
                             .filter(button => !button.disabled)
                             .map(button => (
-                            <button
-                                type="button"
-                                className="btn btn-lg btn-outline-secondary"
-                                value={button.displayValue}
-                                onClick={() => this.handleScoreButtonClicked(button)}
-                            >
-                                {button.displayValue}
-                            </button>
-                        ))}
+                                <button
+                                    type="button"
+                                    className="btn btn-lg btn-outline-secondary"
+                                    value={button.displayValue}
+                                    onClick={() => this.handleScoreButtonClicked(button)}
+                                >
+                                    {button.displayValue}
+                                </button>
+                            ))}
                     </div>
                 </div>
             </div>
