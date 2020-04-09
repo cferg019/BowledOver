@@ -6,7 +6,7 @@
   "scripts": {
     "build:react": "cd react-app && npm run build",
     "start:react": "cd react-app && npm start",
-    "prestart": "npm run build:react",
+    "prestart": "npm run build:react && npm run seed",
     "start": "node server.js",
     "seed": "node ./test/test-game-data/seed.js",
     "start:dev": "npm run seed && nodemon server.js",
