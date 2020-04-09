@@ -87,7 +87,7 @@ class Home extends Component {
                             <td>{this.state.playerYouDoTheBestAgainst}</td>
                         </tr>
                         <tr>
-                            <td>Opponent You Play Worst Again</td>
+                            <td>Opponent You Play Worst Against</td>
                             <td>{this.state.playerYouDoTheWorstAgainst}</td>
                         </tr>
                     </tbody>
