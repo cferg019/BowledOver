@@ -49,6 +49,11 @@ app.use('/api/calc', authMiddleware, calcRoutes)
 
 app.use('/auth', authRoutes)
 
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname, 'react-app', 'build', 'index.html'));
+});
+
 app.use((err, req, res, next) => {
     console.error(err.stack, err.name)
     if (err.name === 'MongoError') {

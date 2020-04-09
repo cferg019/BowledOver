@@ -20,7 +20,9 @@ router.post("/signup", async (req, res, next) => {
         value.verificationToken = randomstring.generate(64)
         await User.create(value)
         emailService.sendVerificationEmail(value.email, value.verificationToken)
-        res.redirect('/verify')
+        res.json({
+            redirectUrl: `${process.env.BASE_APP_URL}/postsignup`
+        })
     } catch (err) {
         next(err)
     }
@@ -34,7 +36,7 @@ router.get('/verify/email/:emailAddress/token/:token', async (req, res, next) =>
     }
     user.isVerified = true
     await user.save()
-    res.redirect(`${process.env.BASE_APP_URL}/login`)
+    res.redirect(`/verified`)
 })
 
 // Route for logging user out
