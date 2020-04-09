@@ -12,7 +12,6 @@ import NavBar from './components/NavBar'
 import Loading from './components/Loading'
 import Profile from './components/Profile'
 import PostSignup from './components/PostSignup'
-import SessionHistory from './components/SessionHistory';
 
 let self = null
 
@@ -73,18 +72,10 @@ class App extends Component {
             <Route path="/postsignup">
               <PostSignup />
             </Route>
+            <PrivateRoute path="/profile" user={this.state.user} component={Profile} isAuthenticated={this.state.isAuthenticated} />
             <PrivateRoute path="/session/:sessionId/game/:gameId" user={this.state.user} component={Game} isAuthenticated={this.state.isAuthenticated} />
             <PrivateRoute path="/session/:sessionId" user={this.state.user} component={Session} isAuthenticated={this.state.isAuthenticated} />
             <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
-
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/sessionhistory">
-              <SessionHistory />
-            </Route>
-            <PrivateRoute path="/" user={this.state.user} component={Home} isAuthenticated={this.state.isAuthenticated} />
-
           </Switch>
         </div>
       </Router>
