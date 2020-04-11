@@ -6,3 +6,15 @@ button {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+.session-card {
+    background-color: white;
+    padding-bottom: 20px;
+}
+
+
+h4 {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-weight: bold;
+}

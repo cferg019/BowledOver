@@ -38,7 +38,7 @@ class Profile extends Component {
             <div className='container'>
                 <Jumbotron />
                 <div className="row">
-                    <div className="col-md-8 offset-md-2">
+                    <div className="prof-card col-md-8 offset-md-2">
                         <form>
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">First Name</label>
@@ -72,11 +72,12 @@ class Profile extends Component {
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-2 col-form-label">Balls</label>
                                 <div class="col-sm-10">
-                                {this.state.balls.map(ball => {
+                                    {this.state.balls.map(ball => {
                                         return (
                                             <input type="text" readonly class="form-control-plaintext" id="staticEmail" value={ball.name} />
                                         )
-                                    })}                                </div>
+                                    })}
+                                </div>
                             </div>
                         </form>
 

@@ -23,7 +23,7 @@ class NavBar extends Component {
             return <Redirect to={this.state.redirect} />
         }
         return (
-            <nav className="navbar navbar-light bg-light justify-content-between navbar-expand-md">
+            <nav className="navbar justify-content-between navbar-expand-md">
                 <Link className="navbar-brand" to="/home">Bowled Over</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>

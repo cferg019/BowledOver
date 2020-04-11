@@ -12,11 +12,11 @@ th {
 }
 
 .throw:hover {
-    background-color: #ffddcf;
+    background-color: #e4894c;
 }
 
 .throw:hover .selected {
-    background-color:  #ffa07a;
+    background-color:  #e4894c;
 }
 
 .disabled:hover {
@@ -24,7 +24,7 @@ th {
 }
 
 .selected {
-    background-color:  #ffa07a;
+    background-color:  #db9156;
 }
 
 .btn {
@@ -34,3 +34,21 @@ th {
 .btn-col {
     text-align: center;
 }
+
+.score-btn {
+    border-color: #0a0f22;
+    color: #0a0f22;
+}
+
+.score-btn:hover {
+    border: #bc2936;
+    background-color: #bc2936;
+    color: white;
+}
+
+
+
+/* red #bc2936 */
+/* orange #d29362 */
+/* teal #387a6e */
+/* black #0a0f22 */

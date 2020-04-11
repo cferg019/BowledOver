@@ -3,8 +3,8 @@ import './Jumbotron.css';
 
 function Jumbotron() {
     return (
-        <div className="jumbotron">
-            <h1 className="display-4">Bowled Over</h1>
+        <div className="header">
+            <h1>Bowled Over</h1>
         </div>
     );
 }

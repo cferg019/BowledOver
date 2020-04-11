@@ -73,6 +73,7 @@ class Login extends Component {
                             <div className="form-group">
                                 <input onClick={this.handleLoginButtonClick} type="submit" className="btnSubmit" value="Login" />
                             </div>
+
                             <div className="form-group">
                                 <Link className="sign-up-button" to="/signup">
                                     <input type="submit" className="btnSubmit" value="Sign Up Here" />

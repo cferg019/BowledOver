@@ -1,3 +1,37 @@
-.container {
+
+.card {
     background-color: white;
+    padding: 10px 50px 10px 50px;
+    margin-bottom: 100px;
 }
+
+.stat, h3 {
+    font-weight: bold;
+}
+
+h3 {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.stat {
+    width: 75%;
+}
+
+.btn {
+    margin: 5px 10px 5px 10px;
+    /* color: #d29362; */
+}
+
+.btn:hover {
+    background-color: #387a6e;
+    border: #387a6e;
+    color: white;
+}
+
+
+
+/* red #bc2936 */
+/* orange #d29362 */
+/* teal #387a6e */
+/* black #0a0f22 */

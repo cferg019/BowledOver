@@ -73,16 +73,16 @@ class Game extends Component {
                 frames
             })
         })
-        .then(res => {
-            if (!res.ok) throw res
-            return res.json()
-        })
-        .then(response => {
-            this.setState({
-                totalScore: response.totalScore
+            .then(res => {
+                if (!res.ok) throw res
+                return res.json()
             })
-        })
-        .catch(err => console.error(err))
+            .then(response => {
+                this.setState({
+                    totalScore: response.totalScore
+                })
+            })
+            .catch(err => console.error(err))
     }
 
     getGame(gameId) {
@@ -352,97 +352,102 @@ class Game extends Component {
         }
         return (
             <div className="container" >
-                <Breadcrumbs
-                    links={[
-                        { name: 'Home', address: '/' },
-                        { name: 'Session', address: `/session/${this.props.match.params.sessionId}` }
-                    ]}
-                    currentPage="Game"
-                />
-                <hr></hr>
                 <div className="row">
-                    <div className="col-sm-10">
-                        <div>
-                            <h4>Game</h4>
+                    <div className="game-card col-md-12">
+                        <Breadcrumbs
+                            links={[
+                                { name: 'Home', address: '/' },
+                                { name: 'Session', address: `/session/${this.props.match.params.sessionId}` }
+                            ]}
+                            currentPage="Game"
+                        />
+                        <hr></hr>
+                        <div className="row">
+                            <div className="col-sm-10">
+                                <div>
+                                    <h4>Game</h4>
 
-                            <p>Setup the game how it was played</p>
+                                    <p>Setup the game how it was played</p>
+                                </div>
+                            </div>
+                            <div className="col-sm-2 float-sm-right">
+                                <button type="button" onClick={this.saveGame.bind(this)} className="btn btn-outline-dark btn-lg float-right">Save</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-sm-2 float-sm-right">
-                        <button type="button" onClick={this.saveGame.bind(this)} className="btn btn-outline-dark btn-lg float-right">Save</button>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-12">
-                        {this.state.successMessage ? (<div className="alert alert-success" role="alert">
-                            {this.state.successMessage}
-                        </div>) : null}
-                        {this.state.errorMessage ? (<div className="alert alert-success" role="alert">
-                            {this.state.errorMessage}
-                        </div>) : null}
-                    </div>
-                </div>
-                <hr />
-                <div className="row">
-                    <div style={{ height: "100%", verticalAlign: 'center' }} className="col-md-2">
-                        <label>Time Played</label>
-                    </div>
-                    <div className="col-md-10">
-                        <DateTimePicker
-                            className="datetime"
-                            onChange={this.handleTimePlayedChange.bind(this)}
-                            value={this.state.timePlayed}
-                        />
-                    </div>
-                </div>
-                <hr />
-                <div className="row">
+                        <div className="row">
+                            <div className="col-sm-12">
+                                {this.state.successMessage ? (<div className="alert alert-success" role="alert">
+                                    {this.state.successMessage}
+                                </div>) : null}
+                                {this.state.errorMessage ? (<div className="alert alert-success" role="alert">
+                                    {this.state.errorMessage}
+                                </div>) : null}
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
+                            <div style={{ height: "100%", verticalAlign: 'center' }} className="col-md-2">
+                                <label>Time Played</label>
+                            </div>
+                            <div className="col-md-10">
+                                <DateTimePicker
+                                    className="datetime"
+                                    onChange={this.handleTimePlayedChange.bind(this)}
+                                    value={this.state.timePlayed}
+                                />
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="row">
 
-                    <div className="col-md-2">
-                        <label for="opponents">Opponents</label>
-                    </div>
-                    <div className="col-md-10">
+                            <div className="col-md-2">
+                                <label for="opponents">Opponents</label>
+                            </div>
+                            <div className="col-md-10">
 
-                        <CreatableSelect
-                            isMulti
-                            name="colors"
-                            options={this.state.opponents.map(opp => ({ label: opp.name, value: opp._id }))}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            id="opponents"
-                            onChange={this.handleOpponentsChange.bind(this)}
-                            value={this.state.selectedPlayers.map(player => ({ label: player.name, value: player._id }))}
+                                <CreatableSelect
+                                    isMulti
+                                    name="colors"
+                                    options={this.state.opponents.map(opp => ({ label: opp.name, value: opp._id }))}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    id="opponents"
+                                    onChange={this.handleOpponentsChange.bind(this)}
+                                    value={this.state.selectedPlayers.map(player => ({ label: player.name, value: player._id }))}
 
-                        />
+                                />
+                            </div>
+                        </div>
+                        <hr></hr>
+                        <div className="row">
+                            <div className="col-md-2">
+                                <label for="balls">Balls</label>
+                            </div>
+                            <div className="col-md-10">
+                                <CreatableSelect
+                                    isMulti
+                                    name="colors"
+                                    options={this.state.balls.map(ball => ({ label: ball.name, value: ball._id }))}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    id="balls"
+                                    onChange={this.handleBallsUsedChange.bind(this)}
+                                    value={this.state.selectedBalls.map(ball => ({ label: ball.name, value: ball._id }))}
+
+                                />
+                            </div>
+                        </div>
+                        <hr></hr>
+                        <div className="row">
+                            <div className="col text-center">
+                                <h3>Total Score: {this.state.totalScore}</h3>
+                            </div>
+                        </div>
+                        <Frames setFrames={this.setFrames} frames={this.state.game.frames} />
                     </div>
                 </div>
-                <hr></hr>
-                <div className="row">
-                    <div className="col-md-2">
-                        <label for="balls">Balls</label>
-                    </div>
-                    <div className="col-md-10">
-                        <CreatableSelect
-                            isMulti
-                            name="colors"
-                            options={this.state.balls.map(ball => ({ label: ball.name, value: ball._id }))}
-                            className="basic-multi-select"
-                            classNamePrefix="select"
-                            id="balls"
-                            onChange={this.handleBallsUsedChange.bind(this)}
-                            value={this.state.selectedBalls.map(ball => ({ label: ball.name, value: ball._id }))}
-
-                        />
-                    </div>
-                </div>
-                <hr></hr>
-                <div className="row">
-                    <div className="col text-center">
-                        <h3>Total Score: {this.state.totalScore}</h3>
-                    </div>
-                </div>
-                <Frames setFrames={this.setFrames} frames={this.state.game.frames}/>
             </div>
+
         )
     }
 }
