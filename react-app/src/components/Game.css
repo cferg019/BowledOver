@@ -8,3 +8,16 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
+.game-card {
+    background-color: white;
+    padding-bottom: 30px;
+}
+
+label {
+    font-weight: bold;
+}
+
+h3 {
+    margin-bottom: 10px;
+}

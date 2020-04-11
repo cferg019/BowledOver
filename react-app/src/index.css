@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-image: url('./images/dolva151100006.jpg'); */
+  background-image: url('./images/black.jpg');
+  background-size: 100%;
 }
 
 code {
@@ -19,4 +20,8 @@ code {
 
 a {
   color: rgb(37, 37, 37)
+}
+
+a:hover {
+  color: #d29362;
 }

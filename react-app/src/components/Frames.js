@@ -183,7 +183,7 @@ class Frames extends Component {
                             .map(button => (
                                 <button
                                     type="button"
-                                    className="btn btn-lg btn-outline-secondary"
+                                    className="score-btn btn btn-lg btn-outline-secondary"
                                     value={button.displayValue}
                                     onClick={() => this.handleScoreButtonClicked(button)}
                                 >

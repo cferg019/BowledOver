@@ -196,84 +196,87 @@ class Session extends Component {
         }
         return (
             <div className="container">
-                <Breadcrumbs
-                    links={[
-                        { name: 'Home', address: '/' },
-                    ]}
-                    currentPage="Session"
-                />
-                <hr></hr>
                 <div className="row">
-                    <div className="col-sm-8 offset-md-1">
-                        <div>
-                            <h4>Pick an Alley</h4>
-                            <p>Select an alley from the drop down below, or type to add a new one</p>
-                        </div>
-                    </div>
-                    <div className="col-sm-2 float-sm-right">
-                        <button type="button" onClick={this.saveSession.bind(this)} className="btn btn-outline-dark btn-lg float-right">Save</button>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-sm-10 offset-md-1">
-                        {this.state.successMessage ? (<div className="alert alert-success" role="alert">
-                            {this.state.successMessage}
-                        </div>) : null}
-                        {this.state.errorMessage ? (<div className="alert alert-success" role="alert">
-                            {this.state.errorMessage}
-                        </div>) : null}
-                    </div>
-                </div>
-                <div className="row">
-                    <div className='col-md-10 offset-md-1'>
-                        <CreatableSelect
-                            isClearable
-                            name="colors"
-                            options={this.state.alleys.map(alley => ({ label: alley.name, value: alley._id }))}
-                            classNamePrefix="select"
-                            id="alleys"
-                            onChange={this.handleAlleysChange.bind(this)}
-                            value={{ label: this.state.selectedAlley.name, value: this.state.selectedAlley._id }}
+                    <div className="session-card col-md-10 offset-md-1">
+                        <Breadcrumbs
+                            links={[
+                                { name: 'Home', address: '/' },
+                            ]}
+                            currentPage="Session"
                         />
+
+                        <div className="row">
+                            <div className="col-sm-8 offset-md-1">
+                                <div>
+                                    <h4>Pick an Alley</h4>
+                                    <p>Select an alley from the drop down below, or type to add a new one</p>
+                                </div>
+                            </div>
+                            <div className="col-sm-2 float-sm-right">
+                                <button type="button" onClick={this.saveSession.bind(this)} className="btn btn-outline-dark btn-lg float-right">Save</button>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-sm-10 offset-md-1">
+                                {this.state.successMessage ? (<div className="alert alert-success" role="alert">
+                                    {this.state.successMessage}
+                                </div>) : null}
+                                {this.state.errorMessage ? (<div className="alert alert-success" role="alert">
+                                    {this.state.errorMessage}
+                                </div>) : null}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className='col-md-10 offset-md-1'>
+                                <CreatableSelect
+                                    isClearable
+                                    name="colors"
+                                    options={this.state.alleys.map(alley => ({ label: alley.name, value: alley._id }))}
+                                    classNamePrefix="select"
+                                    id="alleys"
+                                    onChange={this.handleAlleysChange.bind(this)}
+                                    value={{ label: this.state.selectedAlley.name, value: this.state.selectedAlley._id }}
+                                />
+                            </div>
+                        </div>
+
+                        {this.state.isNew ? null : (
+                            <div>
+                                <div className="row">
+                                    <div className='col-md-10 offset-md-1'>
+                                        <h4>Games</h4>
+                                        <table className="table">
+                                            <tbody>
+                                                {this.state.session.games.map(game => {
+                                                    const date = new Date(game.timePlayed).toLocaleTimeString()
+                                                    return (
+                                                        <tr key={`game-${game._id}`}>
+                                                            <td>{date}</td>
+                                                            <td>vs. {game.players.map(playerId => this.state.opponents.find(opp => opp._id === playerId).name).join(', ')}</td>
+                                                            <td>Score: {game.totalScore}</td>
+                                                            <td>
+                                                                <Link className="new-session" to={`/session/${this.state.session._id}/game/${game._id}`}>
+                                                                    <button type="button" className="btn btn-light">Edit</button>
+                                                                </Link>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className='col-md-10 offset-md-1'>
+                                        <Link className="new-session" to={`/session/${this.state.session._id}/game/new`}>
+                                            <button type="button" className="btn btn-outline-dark">Start New Game</button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
-                <hr />
-                {this.state.isNew ? null : (
-                    <div>
-                        <div className="row">
-                            <div className='col-md-10 offset-md-1'>
-                                <h4>Games</h4>
-                                <table className="table">
-                                    <tbody>
-                                        {this.state.session.games.map(game => {
-                                            const date = new Date(game.timePlayed).toLocaleTimeString()
-                                            return (
-                                                <tr key={`game-${game._id}`}>
-                                                    <td>{date}</td>
-                                                    <td>vs. {game.players.map(playerId => this.state.opponents.find(opp => opp._id === playerId).name).join(', ')}</td>
-                                                    <td>Score: {game.totalScore}</td>
-                                                    <td>
-                                                        <Link className="new-session" to={`/session/${this.state.session._id}/game/${game._id}`}>
-                                                            <button type="button" className="btn btn-light">Edit</button>
-                                                        </Link>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className='col-md-10 offset-md-1'>
-                                <Link className="new-session" to={`/session/${this.state.session._id}/game/new`}>
-                                    <button type="button" className="btn btn-outline-dark">Start New Game</button>
-                                </Link>
-                            </div>
-                        </div>
-                        <hr></hr>
-                    </div>
-                )}
             </div>
         )
     }

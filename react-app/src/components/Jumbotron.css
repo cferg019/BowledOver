@@ -1,0 +1,15 @@
+.header {
+    color: white;
+    text-align: center;
+}
+
+
+h1 {
+    font-size: 100px;
+    color: white;
+    /* font-family: 'Fredoka One', cursive; */
+    /* font-family: 'Titan One', cursive; */
+    font-family: 'Luckiest Guy', cursive;
+    text-align: center;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black
+}

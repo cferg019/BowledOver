@@ -1,0 +1,11 @@
+.breadcrumb:hover {
+    color: orange;
+}
+
+.breadcrumb:link {
+    color: teal;
+}
+
+.breadcrumb:visited, .breadcrumb:active {
+    color: red;
+}

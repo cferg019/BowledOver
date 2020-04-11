@@ -1,3 +1,9 @@
-nav {
-    margin-bottom: 20px;
+.navbar-brand, .nav-link {
+    color: white;
+}
+
+.navbar-brand {
+    /* font-weight: bold; */
+    font-size: x-large;
+    padding: 0;
 }
